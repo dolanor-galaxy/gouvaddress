@@ -1,26 +1,36 @@
-package gouvadress
+package main
 
 import (
 	"encoding/json"
 	"net/http"
 	"net/url"
-	"fmt"
 )
 
 type NETAPI struct {
-	domain string
-	which  map[string]string
-	from   string
+	domain     string
+	which      map[string]string
+	from       string
 	parameters url.Values
+}
+
+type JSON struct {
+	limit       string
+	attribution string
+	version     string
+	licence     string
+	query       string
+	typef       string
+	//# features TODO: Add substruct.
 }
 
 /**
  * Sets struct.
  */
-func (newPI *NETAPI) netAPI(parameters *map[string]string, from string) {
+func netAPI(parameters *map[string]string, from string) *NETAPI {
 	var setterApi NETAPI
 
-	setterApi.domain = "api-adresse.data.gouv.fr"
+	setterApi.from = from
+	setterApi.domain = "http://api-adresse.data.gouv.fr"
 	setterApi.which = map[string]string{
 		"search":  "/search/",
 		"reverse": "/reverse/",
@@ -28,7 +38,7 @@ func (newPI *NETAPI) netAPI(parameters *map[string]string, from string) {
 	}
 
 	setterApi.addparameters(parameters)
-	newPI = &setterApi
+	return &setterApi
 }
 
 /**
@@ -36,6 +46,7 @@ func (newPI *NETAPI) netAPI(parameters *map[string]string, from string) {
  */
 func (setterApi *NETAPI) addparameters(parameters *map[string]string) {
 	if len(*parameters) > 0 {
+		setterApi.parameters = make(map[string][]string)
 		for key, value := range *parameters {
 			setterApi.parameters.Add(key, value)
 		}
@@ -45,11 +56,11 @@ func (setterApi *NETAPI) addparameters(parameters *map[string]string) {
 /**
  * Decode response from API.
  */
-func (setterApi *NETAPI) decode(method string) error {
+func (setterApi *NETAPI) decode(method string) *JSON {
 	var (
-		output interface{}
-		r      *http.Response
-		URI    string
+		response *http.Response
+		URI      string
+		parse    JSON
 	)
 	URI = setterApi.domain
 
@@ -62,14 +73,21 @@ func (setterApi *NETAPI) decode(method string) error {
 		URI += setterApi.which["csv"]
 	}
 
-	r = setterApi.execQuery(&method, &URI)
+	URI += "?"
+	URI += setterApi.parameters.Encode()
+	response = setterApi.execQuery(&method, &URI)
+	if response.Body == nil {
+		panic("Empty response")
+	}
 
-	defer r.Body.Close()
-	return json.NewDecoder(r.Body).Decode(output)
+	json.Unmarshal(response, &parse)
+	return &parse
 }
 
 /**
  * Executes a http query.
+ * TODO: Do with go routine
+ * and see if we can use closure
  */
 func (setterApi *NETAPI) execQuery(method *string, URI *string) *http.Response {
 	if *method == "GET" {
@@ -92,18 +110,15 @@ func (setterApi *NETAPI) execQuery(method *string, URI *string) *http.Response {
 func Search(parameters *map[string]string) error {
 	var search *NETAPI
 
-	search.netAPI(parameters, "Search")
-	return search.decode("GET")
+	search = netAPI(parameters, "Search")
+	return search.decode("GET", result)
 }
 
 /**
  * Reverse API.
  */
-func Reverse(parameters *map[string]string) error {
-	var reverse *NETAPI
+func Reverse(parameters *map[string]string) {
 
-	reverse.netAPI(parameters, "Reverse")
-	return reverse.decode("GET")
 }
 
 /**
@@ -116,6 +131,6 @@ func Csv() {
 func main() {
 	p := make(map[string]string)
 	p["q"] = "1 allée des Bergeronnettes"
-
-	fmt.Printf(Search(&p))
+	p["qq"] = "1 allée des Bergeronnettes"
+	p["qqqq"] = "1 allée des Bergeronnettes"
 }
