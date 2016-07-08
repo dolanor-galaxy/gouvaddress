@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -59,7 +60,7 @@ func (setterApi *NETAPI) addparameters(parameters *map[string]string) {
  */
 func (setterApi *NETAPI) decode(method string) *JSON {
 	var (
-		response *http.Response
+		response []byte
 		URI      string
 		parse    JSON
 	)
@@ -76,17 +77,11 @@ func (setterApi *NETAPI) decode(method string) *JSON {
 
 	URI += "?"
 	URI += setterApi.parameters.Encode()
+
 	response = setterApi.execQuery(&method, &URI)
-	if response.Body == nil {
-		panic("Empty response")
-	}
+	fmt.Printf("%s", response)
 
-	body, r := ioutil.ReadAll(response.Body)
-	if r != nil {
-		panic(r)
-	}
-
-	json.Unmarshal(body, &parse)
+	json.Unmarshal(response, &parse)
 	return &parse
 }
 
@@ -95,19 +90,23 @@ func (setterApi *NETAPI) decode(method string) *JSON {
  * TODO: Do with go routine
  * and see if we can use closure
  */
-func (setterApi *NETAPI) execQuery(method *string, URI *string) *http.Response {
+func (setterApi *NETAPI) execQuery(method *string, URI *string) []byte {
 	if *method == "GET" {
 		r, e := http.Get(*URI)
 		if e != nil {
 			panic(e)
 		}
-		return r
+
+		body, _ := ioutil.ReadAll(r.Body)
+		return body
 	}
 	r, e := http.PostForm(*URI, setterApi.parameters)
 	if e != nil {
 		panic(e)
 	}
-	return r
+
+	body, _ := ioutil.ReadAll(r.Body)
+	return body
 }
 
 /**
@@ -140,5 +139,6 @@ func main() {
 
 	var js *JSON
 	js = Search(&p)
-	println(js.attribution) //# Test output.
+	println("\n\n\n\n")
+	fmt.Printf("%s", js.limit)
 }
