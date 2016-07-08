@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 )
@@ -80,7 +81,12 @@ func (setterApi *NETAPI) decode(method string) *JSON {
 		panic("Empty response")
 	}
 
-	json.Unmarshal(response, &parse)
+	body, r := ioutil.ReadAll(response.Body)
+	if r != nil {
+		panic(r)
+	}
+
+	json.Unmarshal(body, &parse)
 	return &parse
 }
 
@@ -107,11 +113,11 @@ func (setterApi *NETAPI) execQuery(method *string, URI *string) *http.Response {
 /**
  * Search API.
  */
-func Search(parameters *map[string]string) error {
+func Search(parameters *map[string]string) *JSON {
 	var search *NETAPI
 
 	search = netAPI(parameters, "Search")
-	return search.decode("GET", result)
+	return search.decode("GET")
 }
 
 /**
@@ -131,6 +137,8 @@ func Csv() {
 func main() {
 	p := make(map[string]string)
 	p["q"] = "1 allée des Bergeronnettes"
-	p["qq"] = "1 allée des Bergeronnettes"
-	p["qqqq"] = "1 allée des Bergeronnettes"
+
+	var js *JSON
+	js = Search(&p)
+	println(js.attribution) //# Test output.
 }
