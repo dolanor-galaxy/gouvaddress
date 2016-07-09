@@ -16,13 +16,32 @@ type NETAPI struct {
 }
 
 type JSON struct {
-	limit       string
-	attribution string
-	version     string
-	licence     string
-	query       string
-	typef       string
-	//# features TODO: Add substruct.
+	Limit       int    `json:"limit"`
+	Attribution string `json:"attribution"`
+	Version     string `json:"version"`
+	Licence     string `json:"licence"`
+	Query       string `json:"query"`
+	Type        string `json:"type"`
+	Features    []struct {
+		Geometry struct {
+			Type        string    `json:"type"`
+			Coordinates []float64 `json:"coordinates"`
+		} `json:"geometry"`
+		Properties struct {
+			Citycode    string  `json:"citycode"`
+			Postcode    string  `json:"postcode"`
+			Name        string  `json:"name"`
+			Housenumber string  `json:"housenumber"`
+			Type        string  `json:"type"`
+			Context     string  `json:"context"`
+			Score       float64 `json:"score"`
+			Label       string  `json:"label"`
+			City        string  `json:"city"`
+			ID          string  `json:"id"`
+			Street      string  `json:"street"`
+		} `json:"properties"`
+		Type string `json:"type"`
+	} `json:"features"`
 }
 
 /**
@@ -79,9 +98,12 @@ func (setterApi *NETAPI) decode(method string) *JSON {
 	URI += setterApi.parameters.Encode()
 
 	response = setterApi.execQuery(&method, &URI)
-	fmt.Printf("%s", response)
 
-	json.Unmarshal(response, &parse)
+	r := json.Unmarshal(response, &parse)
+	if r != nil {
+		panic(r)
+	}
+
 	return &parse
 }
 
@@ -122,23 +144,19 @@ func Search(parameters *map[string]string) *JSON {
 /**
  * Reverse API.
  */
-func Reverse(parameters *map[string]string) {
+func Reverse(parameters *map[string]string) *JSON {
+	var reverse *NETAPI
 
-}
-
-/**
- * CSV search&reverse.
- */
-func Csv() {
-
+	reverse = netAPI(parameters, "Reverse")
+	return reverse.decode("GET")
 }
 
 func main() {
-	p := make(map[string]string)
-	p["q"] = "1 allée des Bergeronnettes"
+	pp := make(map[string]string)
+	pp["lon"] = "2.37"
+	pp["lat"] = "48.357"
 
-	var js *JSON
-	js = Search(&p)
-	println("\n\n\n\n")
-	fmt.Printf("%s", js.limit)
+	var jp *JSON
+	jp = Reverse(&pp)
+	fmt.Printf("%#v", jp)
 }
