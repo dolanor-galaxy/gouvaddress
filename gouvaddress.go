@@ -55,7 +55,6 @@ func netAPI(parameters *map[string]string, from string) *NETAPI {
 	setterApi.which = map[string]string{
 		"search":  "/search/",
 		"reverse": "/reverse/",
-		"csv":     "/csv/",
 	}
 
 	setterApi.addparameters(parameters)
