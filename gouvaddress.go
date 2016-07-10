@@ -89,8 +89,6 @@ func (setterApi *NETAPI) decode(method string) *JSON {
 		URI += setterApi.which["search"]
 	case "Reverse":
 		URI += setterApi.which["reverse"]
-	case "Csv":
-		URI += setterApi.which["csv"]
 	}
 
 	URI += "?"
