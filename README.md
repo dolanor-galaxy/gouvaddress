@@ -73,7 +73,7 @@ Voilà! You can access to your result as a standard struct, for example:
 fmt.Printf("%s", result.Query)
 fmt.Printf("%d", result.Limit)
 
-// Some objects are substructs or substruct-arrays (so you can use for[in] or others...) .
+// Some objects are substructs or substruct-arrays (so you can use for[in] or others...).
 fmt.Printf("%s", result.Features[0].Properties.City)
 fmt.Printf("%d", result.Features[0].Properties.Distance)
 ```
