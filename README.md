@@ -78,5 +78,8 @@ fmt.Printf("%s", result.Features[0].Properties.City)
 fmt.Printf("%d", result.Features[0].Properties.Distance)
 ```
 
+## Testing
+You can test this package with `go test github.com/maelsan/gouvaddress`. It just checks if a result is returned.
+
 ## Licence
 The MIT License (MIT). Please see License File for more information.
