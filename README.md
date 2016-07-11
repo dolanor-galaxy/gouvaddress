@@ -69,7 +69,7 @@ type JSON struct {
 Voilà! You can access to your result as a standard struct, for example:
 
 ```go
-// Be careful with types, all objects in gouvaddress are not the same type.
+// Be careful with types, all objects in gouvaddress haven't the same type.
 fmt.Printf("%s", result.Query)
 fmt.Printf("%d", result.Limit)
 
