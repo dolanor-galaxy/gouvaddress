@@ -57,14 +57,14 @@ func netAPI(parameters *map[string]string, from string) *NETAPI {
 		"reverse": "/reverse/",
 	}
 
-	setterApi.addparameters(parameters)
+	setterApi.addParameters(parameters)
 	return &setterApi
 }
 
 /**
  * Add parameters to NETAPI.
  */
-func (setterApi *NETAPI) addparameters(parameters *map[string]string) {
+func (setterApi *NETAPI) addParameters(parameters *map[string]string) {
 	if len(*parameters) > 0 {
 		setterApi.parameters = make(map[string][]string)
 		for key, value := range *parameters {
