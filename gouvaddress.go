@@ -7,7 +7,7 @@ import (
 	"net/url"
 )
 
-// NETAPI Struct to define URI API.
+// NETAPI - Struct to define URI API.
 type NETAPI struct {
 	domain     string
 	which      map[string]string
@@ -15,7 +15,7 @@ type NETAPI struct {
 	parameters url.Values
 }
 
-// JSON Struct to store JSON response.
+// JSON - Struct to store JSON response.
 type JSON struct {
 	Limit       int    `json:"limit"`
 	Attribution string `json:"attribution"`
@@ -46,7 +46,7 @@ type JSON struct {
 	} `json:"features"`
 }
 
-// netAPI Set struct before send request.
+// netAPI - Set struct before send request.
 func netAPI(parameters *map[string]string, from string) *NETAPI {
 	var setterAPI NETAPI
 
@@ -61,7 +61,7 @@ func netAPI(parameters *map[string]string, from string) *NETAPI {
 	return &setterAPI
 }
 
-// addParameters Add parameters given from dev call.
+// addParameters - Add parameters given from dev call.
 func (setterAPI *NETAPI) addParameters(parameters *map[string]string) {
 	if len(*parameters) > 0 {
 		setterAPI.parameters = make(map[string][]string)
@@ -71,7 +71,7 @@ func (setterAPI *NETAPI) addParameters(parameters *map[string]string) {
 	}
 }
 
-// decode Decode response from JSON.
+// decode - Decode response from JSON.
 func (setterAPI *NETAPI) decode(method string) *JSON {
 	var (
 		response []byte
@@ -100,7 +100,7 @@ func (setterAPI *NETAPI) decode(method string) *JSON {
 	return &parse
 }
 
-// execQuery Send a HTTP query.
+// execQuery - Send a HTTP query.
 func (setterAPI *NETAPI) execQuery(method *string, URI *string) []byte {
 	if *method == "GET" {
 		r, e := http.Get(*URI)
@@ -120,7 +120,7 @@ func (setterAPI *NETAPI) execQuery(method *string, URI *string) []byte {
 	return body
 }
 
-// Search function to use /search/ API
+// Search - Function to use /search/ API
 func Search(parameters *map[string]string) *JSON {
 	var search *NETAPI
 
@@ -128,7 +128,7 @@ func Search(parameters *map[string]string) *JSON {
 	return search.decode("GET")
 }
 
-// Reverse function to use /reverse/ API
+// Reverse - Function to use /reverse/ API
 func Reverse(parameters *map[string]string) *JSON {
 	var reverse *NETAPI
 
