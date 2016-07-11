@@ -126,9 +126,7 @@ func (setterApi *NETAPI) execQuery(method *string, URI *string) []byte {
 	return body
 }
 
-/**
- * Search API.
- */
+// Search function to use /search/ API
 func Search(parameters *map[string]string) *JSON {
 	var search *NETAPI
 
@@ -136,9 +134,7 @@ func Search(parameters *map[string]string) *JSON {
 	return search.decode("GET")
 }
 
-/**
- * Reverse API.
- */
+// Reverse function to use /reverse/ API
 func Reverse(parameters *map[string]string) *JSON {
 	var reverse *NETAPI
 
