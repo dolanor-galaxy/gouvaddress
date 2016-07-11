@@ -7,6 +7,7 @@ import (
 	"net/url"
 )
 
+// NETAPI Struct to define URI API.
 type NETAPI struct {
 	domain     string
 	which      map[string]string
@@ -14,6 +15,7 @@ type NETAPI struct {
 	parameters url.Values
 }
 
+// JSON Struct to store JSON response.
 type JSON struct {
 	Limit       int    `json:"limit"`
 	Attribution string `json:"attribution"`
@@ -44,57 +46,51 @@ type JSON struct {
 	} `json:"features"`
 }
 
-/**
- * Sets struct.
- */
+// netAPI Set struct before send request.
 func netAPI(parameters *map[string]string, from string) *NETAPI {
-	var setterApi NETAPI
+	var setterAPI NETAPI
 
-	setterApi.from = from
-	setterApi.domain = "http://api-adresse.data.gouv.fr"
-	setterApi.which = map[string]string{
+	setterAPI.from = from
+	setterAPI.domain = "http://api-adresse.data.gouv.fr"
+	setterAPI.which = map[string]string{
 		"search":  "/search/",
 		"reverse": "/reverse/",
 	}
 
-	setterApi.addParameters(parameters)
-	return &setterApi
+	setterAPI.addParameters(parameters)
+	return &setterAPI
 }
 
-/**
- * Add parameters to NETAPI.
- */
-func (setterApi *NETAPI) addParameters(parameters *map[string]string) {
+// addParameters Add parameters given from dev call.
+func (setterAPI *NETAPI) addParameters(parameters *map[string]string) {
 	if len(*parameters) > 0 {
-		setterApi.parameters = make(map[string][]string)
+		setterAPI.parameters = make(map[string][]string)
 		for key, value := range *parameters {
-			setterApi.parameters.Add(key, value)
+			setterAPI.parameters.Add(key, value)
 		}
 	}
 }
 
-/**
- * Decode response from API.
- */
-func (setterApi *NETAPI) decode(method string) *JSON {
+// decode Decode response from JSON.
+func (setterAPI *NETAPI) decode(method string) *JSON {
 	var (
 		response []byte
 		URI      string
 		parse    JSON
 	)
-	URI = setterApi.domain
+	URI = setterAPI.domain
 
-	switch setterApi.from {
+	switch setterAPI.from {
 	case "Search":
-		URI += setterApi.which["search"]
+		URI += setterAPI.which["search"]
 	case "Reverse":
-		URI += setterApi.which["reverse"]
+		URI += setterAPI.which["reverse"]
 	}
 
 	URI += "?"
-	URI += setterApi.parameters.Encode()
+	URI += setterAPI.parameters.Encode()
 
-	response = setterApi.execQuery(&method, &URI)
+	response = setterAPI.execQuery(&method, &URI)
 
 	r := json.Unmarshal(response, &parse)
 	if r != nil {
@@ -104,10 +100,8 @@ func (setterApi *NETAPI) decode(method string) *JSON {
 	return &parse
 }
 
-/**
- * Executes a http query.
- */
-func (setterApi *NETAPI) execQuery(method *string, URI *string) []byte {
+// execQuery Send a HTTP query.
+func (setterAPI *NETAPI) execQuery(method *string, URI *string) []byte {
 	if *method == "GET" {
 		r, e := http.Get(*URI)
 		if e != nil {
@@ -117,7 +111,7 @@ func (setterApi *NETAPI) execQuery(method *string, URI *string) []byte {
 		body, _ := ioutil.ReadAll(r.Body)
 		return body
 	}
-	r, e := http.PostForm(*URI, setterApi.parameters)
+	r, e := http.PostForm(*URI, setterAPI.parameters)
 	if e != nil {
 		panic(e)
 	}

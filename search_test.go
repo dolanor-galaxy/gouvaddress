@@ -13,10 +13,10 @@ func TestSearch(t *testing.T) {
 		"lon": "2.37",
 	}
 
-	feedback_search := Search(&testing)
-	feedback_reverse := Reverse(&testing)
+	feedbackSearch := Search(&testing)
+	feedbackReverse := Reverse(&testing)
 
-	if feedback_search == nil || feedback_reverse == nil {
+	if feedbackSearch == nil || feedbackReverse == nil {
 		t.Errorf("%s", "Value's return cannot be nil.")
 	}
 }
