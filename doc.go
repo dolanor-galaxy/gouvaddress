@@ -16,7 +16,7 @@ And call the function which correspond to the API endpoint.
 or:
   result := gouvaddress.Reverse(&parameters)
 
-Some concret examples:
+Some concrete examples:
   // Be careful with types, all objects in gouvaddress haven't the same type.
   fmt.Printf("%s", result.Query)
   fmt.Printf("%d", result.Limit)
