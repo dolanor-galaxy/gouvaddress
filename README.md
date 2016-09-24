@@ -4,6 +4,7 @@
 [![codebeat badge](https://codebeat.co/badges/e1e6cf3b-821b-43f8-9318-d69d8ffdf1a7)](https://codebeat.co/projects/github-com-maelsan-gouvaddress)
 [![Go Report Card](https://goreportcard.com/badge/github.com/maelsan/gouvaddress)](https://goreportcard.com/report/github.com/maelsan/gouvaddress)
 [![Build Status](https://travis-ci.org/maelsan/gouvaddress.svg?branch=master)](https://travis-ci.org/maelsan/gouvaddress)
+[![GoDoc](https://godoc.org/github.com/maelsan/gouvaddress?status.svg)](https://godoc.org/github.com/maelsan/gouvaddress)
 
 ## INSTALLATION
 Just use `go get github.com/maelsan/gouvaddress` and import this package:
