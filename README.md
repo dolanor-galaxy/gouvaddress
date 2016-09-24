@@ -14,6 +14,8 @@ import "github.com/maelsan/gouvaddress"
 ```
 
 ## DOCUMENTATION
+This package use French Governmental Address API which is like a database of addresses in France. Note that those addresses are not affilied to citizens and do not contain personal informations. This API returns addresses referenced in France.
+
 I only implemented `/search/` & `/reverse/` because CSV format is too old, deprecated and so awful that I cannot imagine use it with a modern API. You must define a map of your parameters, like this:
 
 ```go

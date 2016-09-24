@@ -1,5 +1,5 @@
 /*
-This package use French Governmental Address API which is like a database of addresses in France. Note that those address are not affilied to citizens and do not contain personal informations. This API returns addresses referenced in France. It's like Google API, but with more accurate informations of French addresses.
+This package use French Governmental Address API which is like a database of addresses in France. Note that those addresses are not affilied to citizens and do not contain personal informations. This API returns addresses referenced in France. It's like Google API, but with more accurate informations of French addresses.
 
 You can find all informations about this API here: https://adresse.data.gouv.fr/api/
 
