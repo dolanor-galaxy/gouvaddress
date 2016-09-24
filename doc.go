@@ -16,16 +16,7 @@ And call the function which correspond to the API endpoint.
 or:
   result := gouvaddress.Reverse(&parameters)
 
-Some concrete examples:
-  // Be careful with types, all objects in gouvaddress haven't the same type.
-  fmt.Printf("%s", result.Query)
-  fmt.Printf("%d", result.Limit)
-
-  // Some objects are substructs or substruct-arrays (so you can use loop or others...).
-  fmt.Printf("%s", result.Features[0].Properties.City)
-  fmt.Printf("%d", result.Features[0].Properties.Distance)
-
-Values which are returned are accessible as follow:
+It's important to understand how to access to returned values! There are accessibles as follow:
   type JSON struct {
       Limit       int    `json:"limit"`
       Attribution string `json:"attribution"`
@@ -55,6 +46,15 @@ Values which are returned are accessible as follow:
           Type string `json:"type"`
       } `json:"features"`
   }
+
+Some concrete examples with returned values:
+  // Be careful with types, all objects in gouvaddress haven't the same type.
+  fmt.Printf("%s", result.Query)
+  fmt.Printf("%d", result.Limit)
+
+  // Some objects are substructs or substruct-arrays (so you can use loop or others...).
+  fmt.Printf("%s", result.Features[0].Properties.City)
+  fmt.Printf("%d", result.Features[0].Properties.Distance)
 
 For more informations https://github.com/maelsan/gouvaddress
 */
