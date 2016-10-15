@@ -5,6 +5,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/maelsan/gouvaddress)](https://goreportcard.com/report/github.com/maelsan/gouvaddress)
 [![Build Status](https://travis-ci.org/maelsan/gouvaddress.svg?branch=master)](https://travis-ci.org/maelsan/gouvaddress)
 [![Build Status](https://circleci.com/gh/maelsan/gouvaddress.svg?style=shield&circle-token=0b62143039e28efaf2fddec6e31f1e2d894ea1de)](https://circleci.com/gh/maelsan/gouvaddress)
+[![Build Status](https://codeship.com/projects/0af95240-74e1-0134-042c-3a52ed362f75/status?branch=master)](https://codeship.com/projects/0af95240-74e1-0134-042c-3a52ed362f75/status?branch=master)
 [![GoDoc](https://godoc.org/github.com/maelsan/gouvaddress?status.svg)](https://godoc.org/github.com/maelsan/gouvaddress)
 
 ## INSTALLATION
