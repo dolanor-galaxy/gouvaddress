@@ -4,6 +4,7 @@
 [![codebeat badge](https://codebeat.co/badges/e1e6cf3b-821b-43f8-9318-d69d8ffdf1a7)](https://codebeat.co/projects/github-com-maelsan-gouvaddress)
 [![Go Report Card](https://goreportcard.com/badge/github.com/maelsan/gouvaddress)](https://goreportcard.com/report/github.com/maelsan/gouvaddress)
 [![Build Status](https://travis-ci.org/maelsan/gouvaddress.svg?branch=master)](https://travis-ci.org/maelsan/gouvaddress)
+[![Build Status](https://circleci.com/gh/maelsan/gouvaddress.svg?style=shield&circle-token=0b62143039e28efaf2fddec6e31f1e2d894ea1de)](https://circleci.com/gh/maelsan/gouvaddress)
 [![GoDoc](https://godoc.org/github.com/maelsan/gouvaddress?status.svg)](https://godoc.org/github.com/maelsan/gouvaddress)
 
 ## INSTALLATION
